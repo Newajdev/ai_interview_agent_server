@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./src/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Candidate {
+  id          String            @id @default(cuid())
+  email       String?           @unique
+  name        String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  profile     CandidateProfile?
+  interviews  Interview[]
+}
+
+model CandidateProfile {
+  id             String   @id @default(cuid())
+  candidateId    String   @unique
+  professionalTitle String?
+  phone          String?
+  skills         Json?
+  experience     Json?
+  education      Json?
+  projects       Json?
+  rawCvText      String?
+  structuredData Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  candidate      Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+}
+
+model Interview {
+  id          String              @id @default(cuid())
+  candidateId String
+  status      InterviewStatus     @default(DRAFT)
+  startedAt   DateTime?
+  completedAt DateTime?
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  candidate   Candidate            @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  messages    InterviewMessage[]
+  evaluation  InterviewEvaluation?
+}
+
+model InterviewMessage {
+  id          String        @id @default(cuid())
+  interviewId String
+  role        MessageRole
+  content     String
+  createdAt   DateTime      @default(now())
+  interview   Interview     @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  @@index([interviewId, createdAt])
+}
+
+model InterviewEvaluation {
+  id                   String    @id @default(cuid())
+  interviewId          String    @unique
+  technicalScore       Float?
+  communicationScore   Float?
+  problemSolvingScore  Float?
+  overallScore         Float?
+  strengths            Json?
+  weaknesses           Json?
+  recommendations      Json?
+  summary              String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  interview            Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+}
+
+enum InterviewStatus {
+  DRAFT
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum MessageRole {
+  AI
+  CANDIDATE
+  SYSTEM
+}

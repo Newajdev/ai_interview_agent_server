@@ -1,0 +1,32 @@
+{
+  "name": "ai-interview-backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.0",
+    "cloudinary": "^2.8.0",
+    "cors": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "multer": "^2.0.2",
+    "nodemailer": "^7.0.6",
+    "pdf-parse": "^1.1.1",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/cors": "latest",
+    "@types/express": "latest",
+    "@types/node": "latest",
+    "@types/multer": "^2.0.0",
+    "@types/nodemailer": "^7.0.2",
+    "prisma": "6.19.0",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}
