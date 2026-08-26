@@ -1,3 +1,5 @@
+import { env } from "../../config/env";
+
 export interface SpeechToTextProvider {
   transcribe(
     audio: Buffer,
@@ -23,7 +25,7 @@ export class MissingVoiceProviderKeyError extends Error {
 const groqApiUrl = "https://api.groq.com/openai/v1";
 
 function requireGroqApiKey() {
-  const apiKey = process.env.GROQ_API_KEY;
+  const apiKey = env.GROQ_API_KEY;
   if (!apiKey) throw new MissingVoiceProviderKeyError();
   return apiKey;
 }

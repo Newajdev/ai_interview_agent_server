@@ -1,6 +1,12 @@
 import { Router } from "express";
 import multer from "multer";
-import { synthesizeSpeech, transcribeAudio } from "./voice.controller";
+import {
+  processInterviewResponse,
+  synthesizeSpeech,
+  transcribeAudio,
+} from "./voice.controller";
+import { validate } from "../../middleware/validation.middleware";
+import { interviewResponseSchema, synthesizeSchema } from "./voice.validation";
 
 const acceptedAudioTypes = [
   "audio/webm",
@@ -17,4 +23,10 @@ const upload = multer({
 
 export const voiceRouter = Router();
 voiceRouter.post("/transcribe", upload.single("audio"), transcribeAudio);
-voiceRouter.post("/synthesize", synthesizeSpeech);
+voiceRouter.post("/synthesize", validate(synthesizeSchema), synthesizeSpeech);
+voiceRouter.post(
+  "/interview-response",
+  upload.single("audio"),
+  validate(interviewResponseSchema),
+  processInterviewResponse,
+);
