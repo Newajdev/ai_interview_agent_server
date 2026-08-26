@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDir": "./src",
+    "rootDir": ".",
     "outDir": "./dist",
     "module": "ESNext",
     "moduleResolution": "bundler",
@@ -11,5 +11,5 @@
     "forceConsistentCasingInFileNames": true
   },
   "exclude": ["node_modules", "dist"],
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "prisma/src/generated/client/**/*.ts"]
 }
