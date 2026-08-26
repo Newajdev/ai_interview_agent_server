@@ -20,8 +20,18 @@ export type CandidateProfileModel = runtime.Types.Result.DefaultSelection<Prisma
 
 export type AggregateCandidateProfile = {
   _count: CandidateProfileCountAggregateOutputType | null
+  _avg: CandidateProfileAvgAggregateOutputType | null
+  _sum: CandidateProfileSumAggregateOutputType | null
   _min: CandidateProfileMinAggregateOutputType | null
   _max: CandidateProfileMaxAggregateOutputType | null
+}
+
+export type CandidateProfileAvgAggregateOutputType = {
+  cvSize: number | null
+}
+
+export type CandidateProfileSumAggregateOutputType = {
+  cvSize: number | null
 }
 
 export type CandidateProfileMinAggregateOutputType = {
@@ -30,6 +40,10 @@ export type CandidateProfileMinAggregateOutputType = {
   professionalTitle: string | null
   phone: string | null
   rawCvText: string | null
+  cvUrl: string | null
+  cvOriginalName: string | null
+  cvMimeType: string | null
+  cvSize: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,6 +54,10 @@ export type CandidateProfileMaxAggregateOutputType = {
   professionalTitle: string | null
   phone: string | null
   rawCvText: string | null
+  cvUrl: string | null
+  cvOriginalName: string | null
+  cvMimeType: string | null
+  cvSize: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -55,11 +73,23 @@ export type CandidateProfileCountAggregateOutputType = {
   projects: number
   rawCvText: number
   structuredData: number
+  cvUrl: number
+  cvOriginalName: number
+  cvMimeType: number
+  cvSize: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type CandidateProfileAvgAggregateInputType = {
+  cvSize?: true
+}
+
+export type CandidateProfileSumAggregateInputType = {
+  cvSize?: true
+}
 
 export type CandidateProfileMinAggregateInputType = {
   id?: true
@@ -67,6 +97,10 @@ export type CandidateProfileMinAggregateInputType = {
   professionalTitle?: true
   phone?: true
   rawCvText?: true
+  cvUrl?: true
+  cvOriginalName?: true
+  cvMimeType?: true
+  cvSize?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -77,6 +111,10 @@ export type CandidateProfileMaxAggregateInputType = {
   professionalTitle?: true
   phone?: true
   rawCvText?: true
+  cvUrl?: true
+  cvOriginalName?: true
+  cvMimeType?: true
+  cvSize?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -92,6 +130,10 @@ export type CandidateProfileCountAggregateInputType = {
   projects?: true
   rawCvText?: true
   structuredData?: true
+  cvUrl?: true
+  cvOriginalName?: true
+  cvMimeType?: true
+  cvSize?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -135,6 +177,18 @@ export type CandidateProfileAggregateArgs<ExtArgs extends runtime.Types.Extensio
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: CandidateProfileAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: CandidateProfileSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: CandidateProfileMinAggregateInputType
@@ -165,6 +219,8 @@ export type CandidateProfileGroupByArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   _count?: CandidateProfileCountAggregateInputType | true
+  _avg?: CandidateProfileAvgAggregateInputType
+  _sum?: CandidateProfileSumAggregateInputType
   _min?: CandidateProfileMinAggregateInputType
   _max?: CandidateProfileMaxAggregateInputType
 }
@@ -180,9 +236,15 @@ export type CandidateProfileGroupByOutputType = {
   projects: runtime.JsonValue | null
   rawCvText: string | null
   structuredData: runtime.JsonValue | null
+  cvUrl: string | null
+  cvOriginalName: string | null
+  cvMimeType: string | null
+  cvSize: number | null
   createdAt: Date
   updatedAt: Date
   _count: CandidateProfileCountAggregateOutputType | null
+  _avg: CandidateProfileAvgAggregateOutputType | null
+  _sum: CandidateProfileSumAggregateOutputType | null
   _min: CandidateProfileMinAggregateOutputType | null
   _max: CandidateProfileMaxAggregateOutputType | null
 }
@@ -216,6 +278,10 @@ export type CandidateProfileWhereInput = {
   projects?: Prisma.JsonNullableFilter<"CandidateProfile">
   rawCvText?: Prisma.StringNullableFilter<"CandidateProfile"> | string | null
   structuredData?: Prisma.JsonNullableFilter<"CandidateProfile">
+  cvUrl?: Prisma.StringNullableFilter<"CandidateProfile"> | string | null
+  cvOriginalName?: Prisma.StringNullableFilter<"CandidateProfile"> | string | null
+  cvMimeType?: Prisma.StringNullableFilter<"CandidateProfile"> | string | null
+  cvSize?: Prisma.IntNullableFilter<"CandidateProfile"> | number | null
   createdAt?: Prisma.DateTimeFilter<"CandidateProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CandidateProfile"> | Date | string
   candidate?: Prisma.XOR<Prisma.CandidateScalarRelationFilter, Prisma.CandidateWhereInput>
@@ -232,6 +298,10 @@ export type CandidateProfileOrderByWithRelationInput = {
   projects?: Prisma.SortOrderInput | Prisma.SortOrder
   rawCvText?: Prisma.SortOrderInput | Prisma.SortOrder
   structuredData?: Prisma.SortOrderInput | Prisma.SortOrder
+  cvUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  cvOriginalName?: Prisma.SortOrderInput | Prisma.SortOrder
+  cvMimeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  cvSize?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   candidate?: Prisma.CandidateOrderByWithRelationInput
@@ -251,6 +321,10 @@ export type CandidateProfileWhereUniqueInput = Prisma.AtLeast<{
   projects?: Prisma.JsonNullableFilter<"CandidateProfile">
   rawCvText?: Prisma.StringNullableFilter<"CandidateProfile"> | string | null
   structuredData?: Prisma.JsonNullableFilter<"CandidateProfile">
+  cvUrl?: Prisma.StringNullableFilter<"CandidateProfile"> | string | null
+  cvOriginalName?: Prisma.StringNullableFilter<"CandidateProfile"> | string | null
+  cvMimeType?: Prisma.StringNullableFilter<"CandidateProfile"> | string | null
+  cvSize?: Prisma.IntNullableFilter<"CandidateProfile"> | number | null
   createdAt?: Prisma.DateTimeFilter<"CandidateProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CandidateProfile"> | Date | string
   candidate?: Prisma.XOR<Prisma.CandidateScalarRelationFilter, Prisma.CandidateWhereInput>
@@ -267,11 +341,17 @@ export type CandidateProfileOrderByWithAggregationInput = {
   projects?: Prisma.SortOrderInput | Prisma.SortOrder
   rawCvText?: Prisma.SortOrderInput | Prisma.SortOrder
   structuredData?: Prisma.SortOrderInput | Prisma.SortOrder
+  cvUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  cvOriginalName?: Prisma.SortOrderInput | Prisma.SortOrder
+  cvMimeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  cvSize?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CandidateProfileCountOrderByAggregateInput
+  _avg?: Prisma.CandidateProfileAvgOrderByAggregateInput
   _max?: Prisma.CandidateProfileMaxOrderByAggregateInput
   _min?: Prisma.CandidateProfileMinOrderByAggregateInput
+  _sum?: Prisma.CandidateProfileSumOrderByAggregateInput
 }
 
 export type CandidateProfileScalarWhereWithAggregatesInput = {
@@ -288,6 +368,10 @@ export type CandidateProfileScalarWhereWithAggregatesInput = {
   projects?: Prisma.JsonNullableWithAggregatesFilter<"CandidateProfile">
   rawCvText?: Prisma.StringNullableWithAggregatesFilter<"CandidateProfile"> | string | null
   structuredData?: Prisma.JsonNullableWithAggregatesFilter<"CandidateProfile">
+  cvUrl?: Prisma.StringNullableWithAggregatesFilter<"CandidateProfile"> | string | null
+  cvOriginalName?: Prisma.StringNullableWithAggregatesFilter<"CandidateProfile"> | string | null
+  cvMimeType?: Prisma.StringNullableWithAggregatesFilter<"CandidateProfile"> | string | null
+  cvSize?: Prisma.IntNullableWithAggregatesFilter<"CandidateProfile"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CandidateProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CandidateProfile"> | Date | string
 }
@@ -302,6 +386,10 @@ export type CandidateProfileCreateInput = {
   projects?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   rawCvText?: string | null
   structuredData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cvUrl?: string | null
+  cvOriginalName?: string | null
+  cvMimeType?: string | null
+  cvSize?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   candidate: Prisma.CandidateCreateNestedOneWithoutProfileInput
@@ -318,6 +406,10 @@ export type CandidateProfileUncheckedCreateInput = {
   projects?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   rawCvText?: string | null
   structuredData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cvUrl?: string | null
+  cvOriginalName?: string | null
+  cvMimeType?: string | null
+  cvSize?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -332,6 +424,10 @@ export type CandidateProfileUpdateInput = {
   projects?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   rawCvText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   structuredData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cvUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvOriginalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   candidate?: Prisma.CandidateUpdateOneRequiredWithoutProfileNestedInput
@@ -348,6 +444,10 @@ export type CandidateProfileUncheckedUpdateInput = {
   projects?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   rawCvText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   structuredData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cvUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvOriginalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -363,6 +463,10 @@ export type CandidateProfileCreateManyInput = {
   projects?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   rawCvText?: string | null
   structuredData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cvUrl?: string | null
+  cvOriginalName?: string | null
+  cvMimeType?: string | null
+  cvSize?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -377,6 +481,10 @@ export type CandidateProfileUpdateManyMutationInput = {
   projects?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   rawCvText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   structuredData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cvUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvOriginalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -392,6 +500,10 @@ export type CandidateProfileUncheckedUpdateManyInput = {
   projects?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   rawCvText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   structuredData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cvUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvOriginalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -412,8 +524,16 @@ export type CandidateProfileCountOrderByAggregateInput = {
   projects?: Prisma.SortOrder
   rawCvText?: Prisma.SortOrder
   structuredData?: Prisma.SortOrder
+  cvUrl?: Prisma.SortOrder
+  cvOriginalName?: Prisma.SortOrder
+  cvMimeType?: Prisma.SortOrder
+  cvSize?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type CandidateProfileAvgOrderByAggregateInput = {
+  cvSize?: Prisma.SortOrder
 }
 
 export type CandidateProfileMaxOrderByAggregateInput = {
@@ -422,6 +542,10 @@ export type CandidateProfileMaxOrderByAggregateInput = {
   professionalTitle?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   rawCvText?: Prisma.SortOrder
+  cvUrl?: Prisma.SortOrder
+  cvOriginalName?: Prisma.SortOrder
+  cvMimeType?: Prisma.SortOrder
+  cvSize?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -432,8 +556,16 @@ export type CandidateProfileMinOrderByAggregateInput = {
   professionalTitle?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   rawCvText?: Prisma.SortOrder
+  cvUrl?: Prisma.SortOrder
+  cvOriginalName?: Prisma.SortOrder
+  cvMimeType?: Prisma.SortOrder
+  cvSize?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type CandidateProfileSumOrderByAggregateInput = {
+  cvSize?: Prisma.SortOrder
 }
 
 export type CandidateProfileCreateNestedOneWithoutCandidateInput = {
@@ -468,6 +600,14 @@ export type CandidateProfileUncheckedUpdateOneWithoutCandidateNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CandidateProfileUpdateToOneWithWhereWithoutCandidateInput, Prisma.CandidateProfileUpdateWithoutCandidateInput>, Prisma.CandidateProfileUncheckedUpdateWithoutCandidateInput>
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type CandidateProfileCreateWithoutCandidateInput = {
   id?: string
   professionalTitle?: string | null
@@ -478,6 +618,10 @@ export type CandidateProfileCreateWithoutCandidateInput = {
   projects?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   rawCvText?: string | null
   structuredData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cvUrl?: string | null
+  cvOriginalName?: string | null
+  cvMimeType?: string | null
+  cvSize?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -492,6 +636,10 @@ export type CandidateProfileUncheckedCreateWithoutCandidateInput = {
   projects?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   rawCvText?: string | null
   structuredData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cvUrl?: string | null
+  cvOriginalName?: string | null
+  cvMimeType?: string | null
+  cvSize?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -522,6 +670,10 @@ export type CandidateProfileUpdateWithoutCandidateInput = {
   projects?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   rawCvText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   structuredData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cvUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvOriginalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -536,6 +688,10 @@ export type CandidateProfileUncheckedUpdateWithoutCandidateInput = {
   projects?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   rawCvText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   structuredData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cvUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvOriginalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cvSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -553,6 +709,10 @@ export type CandidateProfileSelect<ExtArgs extends runtime.Types.Extensions.Inte
   projects?: boolean
   rawCvText?: boolean
   structuredData?: boolean
+  cvUrl?: boolean
+  cvOriginalName?: boolean
+  cvMimeType?: boolean
+  cvSize?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   candidate?: boolean | Prisma.CandidateDefaultArgs<ExtArgs>
@@ -569,6 +729,10 @@ export type CandidateProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   projects?: boolean
   rawCvText?: boolean
   structuredData?: boolean
+  cvUrl?: boolean
+  cvOriginalName?: boolean
+  cvMimeType?: boolean
+  cvSize?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   candidate?: boolean | Prisma.CandidateDefaultArgs<ExtArgs>
@@ -585,6 +749,10 @@ export type CandidateProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   projects?: boolean
   rawCvText?: boolean
   structuredData?: boolean
+  cvUrl?: boolean
+  cvOriginalName?: boolean
+  cvMimeType?: boolean
+  cvSize?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   candidate?: boolean | Prisma.CandidateDefaultArgs<ExtArgs>
@@ -601,11 +769,15 @@ export type CandidateProfileSelectScalar = {
   projects?: boolean
   rawCvText?: boolean
   structuredData?: boolean
+  cvUrl?: boolean
+  cvOriginalName?: boolean
+  cvMimeType?: boolean
+  cvSize?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CandidateProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "candidateId" | "professionalTitle" | "phone" | "skills" | "experience" | "education" | "projects" | "rawCvText" | "structuredData" | "createdAt" | "updatedAt", ExtArgs["result"]["candidateProfile"]>
+export type CandidateProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "candidateId" | "professionalTitle" | "phone" | "skills" | "experience" | "education" | "projects" | "rawCvText" | "structuredData" | "cvUrl" | "cvOriginalName" | "cvMimeType" | "cvSize" | "createdAt" | "updatedAt", ExtArgs["result"]["candidateProfile"]>
 export type CandidateProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   candidate?: boolean | Prisma.CandidateDefaultArgs<ExtArgs>
 }
@@ -632,6 +804,10 @@ export type $CandidateProfilePayload<ExtArgs extends runtime.Types.Extensions.In
     projects: runtime.JsonValue | null
     rawCvText: string | null
     structuredData: runtime.JsonValue | null
+    cvUrl: string | null
+    cvOriginalName: string | null
+    cvMimeType: string | null
+    cvSize: number | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["candidateProfile"]>
@@ -1068,6 +1244,10 @@ export interface CandidateProfileFieldRefs {
   readonly projects: Prisma.FieldRef<"CandidateProfile", 'Json'>
   readonly rawCvText: Prisma.FieldRef<"CandidateProfile", 'String'>
   readonly structuredData: Prisma.FieldRef<"CandidateProfile", 'Json'>
+  readonly cvUrl: Prisma.FieldRef<"CandidateProfile", 'String'>
+  readonly cvOriginalName: Prisma.FieldRef<"CandidateProfile", 'String'>
+  readonly cvMimeType: Prisma.FieldRef<"CandidateProfile", 'String'>
+  readonly cvSize: Prisma.FieldRef<"CandidateProfile", 'Int'>
   readonly createdAt: Prisma.FieldRef<"CandidateProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CandidateProfile", 'DateTime'>
 }

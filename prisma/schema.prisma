@@ -28,6 +28,10 @@ model CandidateProfile {
   projects       Json?
   rawCvText      String?
   structuredData Json?
+  cvUrl          String?
+  cvOriginalName String?
+  cvMimeType     String?
+  cvSize         Int?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   candidate      Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)

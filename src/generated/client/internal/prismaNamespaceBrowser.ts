@@ -96,6 +96,10 @@ export const CandidateProfileScalarFieldEnum = {
   projects: 'projects',
   rawCvText: 'rawCvText',
   structuredData: 'structuredData',
+  cvUrl: 'cvUrl',
+  cvOriginalName: 'cvOriginalName',
+  cvMimeType: 'cvMimeType',
+  cvSize: 'cvSize',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
