@@ -21,7 +21,9 @@ export async function createEvaluationController(
   try {
     const interviewId = getInterviewId(request, response);
     if (!interviewId) return;
-    response.status(201).json({ evaluation: await evaluateInterview(interviewId) });
+    response
+      .status(201)
+      .json({ evaluation: await evaluateInterview(interviewId) });
   } catch (error) {
     next(error);
   }

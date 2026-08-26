@@ -41,9 +41,10 @@ export async function uploadCv(file: Express.Multer.File): Promise<UploadedCv> {
 
 export async function analyzeCv(file: Express.Multer.File) {
   const document = await uploadCv(file);
-  const rawCvText = file.mimetype === "application/pdf"
-    ? await extractPdfText(file.buffer)
-    : await extractImageText(file.buffer);
+  const rawCvText =
+    file.mimetype === "application/pdf"
+      ? await extractPdfText(file.buffer)
+      : await extractImageText(file.buffer, file.mimetype);
   if (!rawCvText) throw new Error("No readable text was found in the CV.");
   const parsed = await aiService.parseCv(rawCvText);
   const candidate = await prisma.candidate.create({

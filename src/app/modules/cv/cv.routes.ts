@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import multer from 'multer';
-import { acceptedMimeTypes, analyzeCv, uploadCv } from './cv.service';
+import { Router } from "express";
+import multer from "multer";
+import { acceptedMimeTypes, analyzeCv, uploadCv } from "./cv.service";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -14,9 +14,13 @@ const receiveFile = upload.single("file");
 cvRouter.post("/upload", receiveFile, async (request, response, next) => {
   try {
     if (!request.file) {
-      return response.status(400).json({ error: "A PDF, JPG, or PNG file is required." });
+      return response
+        .status(400)
+        .json({ error: "A PDF, JPG, or PNG file is required." });
     }
-    return response.status(201).json({ document: await uploadCv(request.file) });
+    return response
+      .status(201)
+      .json({ document: await uploadCv(request.file) });
   } catch (error) {
     return next(error);
   }
@@ -24,9 +28,13 @@ cvRouter.post("/upload", receiveFile, async (request, response, next) => {
 cvRouter.post("/analyze", receiveFile, async (request, response, next) => {
   try {
     if (!request.file) {
-      return response.status(400).json({ error: "A PDF, JPG, or PNG file is required." });
+      return response
+        .status(400)
+        .json({ error: "A PDF, JPG, or PNG file is required." });
     }
-    return response.status(201).json({ candidate: await analyzeCv(request.file) });
+    return response
+      .status(201)
+      .json({ candidate: await analyzeCv(request.file) });
   } catch (error) {
     return next(error);
   }

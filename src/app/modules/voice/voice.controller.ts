@@ -71,7 +71,9 @@ export async function processInterviewResponse(
       return;
     }
     if (!("question" in result)) {
-      response.status(500).json({ error: "Unable to generate the next interview question." });
+      response
+        .status(500)
+        .json({ error: "Unable to generate the next interview question." });
       return;
     }
     const audio = await textToSpeechService.synthesize(result.question.content);

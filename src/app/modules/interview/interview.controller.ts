@@ -17,7 +17,11 @@ function getId(request: Request, response: Response) {
   return id;
 }
 
-export async function createInterviewController(request: Request, response: Response, next: NextFunction) {
+export async function createInterviewController(
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) {
   try {
     const interview = await createInterview(request.body.candidateId);
     if (!interview) {
@@ -30,20 +34,32 @@ export async function createInterviewController(request: Request, response: Resp
   }
 }
 
-export async function startInterviewController(request: Request, response: Response, next: NextFunction) {
+export async function startInterviewController(
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) {
   try {
     const id = getId(request, response);
     if (!id) return;
     const result = await startInterview(id);
-    if (!result) return void response.status(404).json({ error: "Interview not found." });
-    if ("conflict" in result) return void response.status(409).json({ error: "Interview has already started or completed." });
+    if (!result)
+      return void response.status(404).json({ error: "Interview not found." });
+    if ("conflict" in result)
+      return void response
+        .status(409)
+        .json({ error: "Interview has already started or completed." });
     response.json({ interview: result });
   } catch (error) {
     next(error);
   }
 }
 
-export async function getInterviewController(request: Request, response: Response, next: NextFunction) {
+export async function getInterviewController(
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) {
   try {
     const id = getId(request, response);
     if (!id) return;
@@ -58,41 +74,71 @@ export async function getInterviewController(request: Request, response: Respons
   }
 }
 
-export async function addMessageController(request: Request, response: Response, next: NextFunction) {
+export async function addMessageController(
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) {
   try {
     const id = getId(request, response);
     if (!id) return;
     const result = await addMessage(id, request.body);
-    if (!result) return void response.status(404).json({ error: "Interview not found." });
-    if ("conflict" in result) return void response.status(409).json({ error: "Interview is not in progress." });
-    if ("expired" in result) return void response.status(409).json({ error: "Interview time has expired." });
+    if (!result)
+      return void response.status(404).json({ error: "Interview not found." });
+    if ("conflict" in result)
+      return void response
+        .status(409)
+        .json({ error: "Interview is not in progress." });
+    if ("expired" in result)
+      return void response
+        .status(409)
+        .json({ error: "Interview time has expired." });
     response.status(201).json(result);
   } catch (error) {
     next(error);
   }
 }
 
-export async function answerController(request: Request, response: Response, next: NextFunction) {
+export async function answerController(
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) {
   try {
     const id = getId(request, response);
     if (!id) return;
     const result = await answerAndGenerateQuestion(id, request.body.content);
-    if (!result) return void response.status(404).json({ error: "Interview not found." });
-    if ("conflict" in result) return void response.status(409).json({ error: "Interview is not in progress." });
-    if ("expired" in result) return void response.status(409).json({ error: "Interview time has expired." });
+    if (!result)
+      return void response.status(404).json({ error: "Interview not found." });
+    if ("conflict" in result)
+      return void response
+        .status(409)
+        .json({ error: "Interview is not in progress." });
+    if ("expired" in result)
+      return void response
+        .status(409)
+        .json({ error: "Interview time has expired." });
     response.status(201).json(result);
   } catch (error) {
     next(error);
   }
 }
 
-export async function completeInterviewController(request: Request, response: Response, next: NextFunction) {
+export async function completeInterviewController(
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) {
   try {
     const id = getId(request, response);
     if (!id) return;
     const result = await completeInterview(id);
-    if (!result) return void response.status(404).json({ error: "Interview not found." });
-    if ("conflict" in result) return void response.status(409).json({ error: "Interview is not in progress." });
+    if (!result)
+      return void response.status(404).json({ error: "Interview not found." });
+    if ("conflict" in result)
+      return void response
+        .status(409)
+        .json({ error: "Interview is not in progress." });
     response.json({ interview: result });
   } catch (error) {
     next(error);
